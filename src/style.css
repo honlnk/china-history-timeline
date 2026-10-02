@@ -1,0 +1,108 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-serif-sc: 'Noto Serif SC', 'Songti SC', 'STSong', 'SimSun', 'Noto Serif CJK SC', serif;
+
+  /* 墨色底 */
+  --color-ink-950: #0b0d12;
+  --color-ink-900: #10131b;
+  --color-ink-850: #141824;
+  --color-ink-800: #191e2b;
+  --color-ink-700: #232937;
+  --color-ink-600: #2e3547;
+  --color-ink-500: #3d4457;
+
+  /* 金色系（大一统 / 强盛 / 强调） */
+  --color-gold-200: #f0e0b8;
+  --color-gold-300: #e6cf97;
+  --color-gold-400: #d9b877;
+  --color-gold-500: #c9a45c;
+  --color-gold-600: #a37f42;
+  --color-gold-700: #7d5f31;
+
+  /* 纸墨文字 */
+  --color-ivory: #ece5d3;
+  --color-parchment: #f4eddc;
+  --color-mist: #a9a493;
+  --color-faint: #6e6a5c;
+
+  /* 印章红 */
+  --color-seal: #9e2b25;
+
+  /* 分类色（与 data/dynasties.ts 中 CATEGORY_META 保持一致） */
+  --color-c-origin: #b08050;
+  --color-c-unified: #d9b877;
+  --color-c-chaos: #9a4540;
+  --color-c-sweeper: #8b7ce0;
+  --color-c-modern-b: #5b9cf3;
+  --color-c-modern-r: #ef5350;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-ink-950);
+  color: var(--color-ivory);
+  font-family: var(--font-serif-sc);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* 长河底纹：层叠径向渐变 + 细噪点，营造宣纸墨韵 */
+.app-bg {
+  background:
+    radial-gradient(1100px 480px at 50% -140px, rgba(217, 184, 119, 0.09), transparent 65%),
+    radial-gradient(900px 520px at 88% 30%, rgba(139, 124, 224, 0.05), transparent 60%),
+    radial-gradient(800px 500px at 6% 66%, rgba(169, 72, 72, 0.05), transparent 60%),
+    radial-gradient(1200px 700px at 50% 110%, rgba(217, 184, 119, 0.05), transparent 65%),
+    var(--color-ink-950);
+}
+
+.noise::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+}
+
+::selection {
+  background: rgba(217, 184, 119, 0.28);
+  color: var(--color-parchment);
+}
+
+/* 横向滚动条：细金线 */
+.river-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(217, 184, 119, 0.35) transparent;
+}
+.river-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+.river-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 999px;
+}
+.river-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, rgba(217, 184, 119, 0.45), rgba(163, 127, 66, 0.45));
+  border-radius: 999px;
+}
+
+:focus-visible {
+  outline: 2px solid rgba(217, 184, 119, 0.7);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

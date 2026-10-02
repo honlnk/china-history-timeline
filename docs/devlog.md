@@ -24,8 +24,17 @@
 3. **Playwright locator click 在本项目两处超时**（滚动容器内印章、Teleport 面板内按钮），坐标点击与元素级 `click()` 均正常——判定为自动化后端兼容性问题，非页面缺陷。
 4. 移动端列表避免按钮嵌套：`DynastySeal` 增加 `decorative` 属性（渲染为非交互元素）。
 
-## 2026-10-03 · 阶段三：发布（进行中）
+## 2026-10-03 · 阶段三：发布（已完成）
 
-- 仓库：`github.com/honlnk/china-history-timeline`（public，SSH remote）。
-- CI：`.github/workflows/deploy.yml`（push main / 手动触发 → 类型检查+构建 → Pages 部署）。
-- 域名：`history.honlnk.com` CNAME → `honlnk.github.io`（TTL 600）。
+- 仓库：`github.com/honlnk/china-history-timeline`（public，SSH remote，推送成功无网络问题）。
+- CI：`.github/workflows/deploy.yml`。首次运行全绿（build 17s + deploy 9s）；`https://honlnk.github.io/china-history-timeline/` 返回 200。
+- DNS：阿里云新增 `history` CNAME → `honlnk.github.io`（RecordId 2106166023748950016，TTL 600）；权威 DNS 已生效。
+- 自定义域名：Pages cname=history.honlnk.com 已设置；`http://history.honlnk.com/` 返回 200。
+- HTTPS：GitHub 证书签发中（API 报 "The certificate does not exist yet"），属计划 §5 预案内等待项；签发后需在 Settings → Pages 勾选 Enforce HTTPS（或 `gh api -X PUT .../pages -F https_enforced=true`）。
+- 工作流注解仅为 Node20 弃用警告（actions 官方迁移期），不影响构建。
+
+## 交付摘要（2026-10-03）
+
+- 线上（HTTP 已通，HTTPS 待证书）：http://history.honlnk.com
+- 备用地址：https://honlnk.github.io/china-history-timeline/
+- 全部验收点状态见 `plan.md` §5；唯一未闭环项为 HTTPS 证书签发等待。

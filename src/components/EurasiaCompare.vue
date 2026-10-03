@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, reactive } from 'vue'
+import { computed, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
 
 import {
   asiaEvents,
@@ -94,7 +94,7 @@ const ASIA_TOP = RULER_H + 8
 const ASIA_H = computed(() => RIBBON_H + 12 + asiaRows.value * ROW_H)
 const EUROPE_TOP = computed(() => ASIA_TOP + ASIA_H.value + GAP_H)
 const EUROPE_H = computed(() => RIBBON_H + 12 + europeRows.value * ROW_H)
-const CONTENT_H = computed(() => EUROPE_TOP.value + EUROPE_H.value + 28)
+const CONTENT_H = computed(() => EUROPE_TOP.value + EUROPE_H.value + 44)
 
 /** 亚洲轨行 y（行 0 贴色带，行号越大越靠上）；返回圆点中心 */
 function asiaRowY(row: number): number {
@@ -137,18 +137,37 @@ const euBands = computed(() =>
 interface TipState {
   p: PlacedEvent | null
   left: number
-  bottom: number // 均自轨顶向上锚定
+  top: number // 中国轨：自轨底向下展开（轨顶上方仅 42px 刻度区，向上必被 overflow 裁切）
+  bottom: number // 欧洲轨：自轨顶向上展开（上方有整条中国轨纵深可用）
   pinned: boolean
 }
 
-const tip = reactive<TipState>({ p: null, left: 0, bottom: 0, pinned: false })
+const tip = reactive<TipState>({ p: null, left: 0, top: 0, bottom: 0, pinned: false })
+
+const scrollerEl = ref<HTMLElement | null>(null)
 
 function applyTip(p: PlacedEvent, pin = false) {
   const narrow = window.innerWidth < 768
   const half = narrow ? 98 : 112
   tip.p = p
-  tip.left = Math.min(Math.max(p.cx, PAD_L + half), CONTENT_W - half)
-  tip.bottom = CONTENT_H.value - (p.ev.side === 'asia' ? ASIA_TOP : EUROPE_TOP.value) + 10
+  let left = Math.max(p.cx, PAD_L + half)
+  const el = scrollerEl.value
+  if (el) {
+    // 与当前可视窗口取交集：悬停瞬间卡片完整可见，不被滚动容器右缘裁切
+    const lo = Math.max(PAD_L + half, el.scrollLeft + half + 8)
+    const hi = Math.min(CONTENT_W - half, el.scrollLeft + el.clientWidth - half - 8)
+    left = Math.min(Math.max(left, lo), Math.max(lo, hi))
+  } else {
+    left = Math.min(left, CONTENT_W - half)
+  }
+  tip.left = left
+  if (p.ev.side === 'asia') {
+    tip.top = ASIA_TOP + ASIA_H.value + 8
+    tip.bottom = 0
+  } else {
+    tip.bottom = CONTENT_H.value - EUROPE_TOP.value + 10
+    tip.top = 0
+  }
   tip.pinned = pin
 }
 
@@ -160,6 +179,20 @@ function dismiss() {
   tip.p = null
   tip.pinned = false
 }
+
+const tipStyle = computed(() => {
+  if (!tip.p) return {}
+  const base: Record<string, string> = { left: tip.left + 'px', '--nc': tip.p.color }
+  // 动态限高：卡片极端超高时在卡内滚动，保证任何方向都不被滚动容器裁切
+  if (tip.p.ev.side === 'asia') {
+    base.top = tip.top + 'px'
+    base.maxHeight = CONTENT_H.value - tip.top - 2 + 'px'
+  } else {
+    base.bottom = tip.bottom + 'px'
+    base.maxHeight = tip.bottom - 2 + 'px'
+  }
+  return base
+})
 
 function onGlobalDown(e: PointerEvent) {
   if (!tip.pinned) return
@@ -213,6 +246,7 @@ const legendItems = [
 
     <div class="relative mt-6">
       <div
+        ref="scrollerEl"
         class="river-scroll relative select-none overflow-x-auto overflow-y-hidden"
         :style="{ height: CONTENT_H + 'px' }"
       >
@@ -286,12 +320,12 @@ const legendItems = [
             </div>
           </div>
 
-          <!-- 提示卡（自对应轨顶向上展开） -->
+          <!-- 提示卡：中国轨向下展开 / 欧洲轨向上展开 -->
           <div
             v-if="tip.p"
             class="ev-tip"
             :class="{ pinned: tip.pinned }"
-            :style="{ left: tip.left + 'px', bottom: tip.bottom + 'px', '--nc': tip.p.color }"
+            :style="tipStyle"
             role="status"
           >
             <p class="tip-title">{{ tip.p.ev.name }}</p>
@@ -493,6 +527,7 @@ const legendItems = [
   box-shadow: 0 16px 42px rgba(0, 0, 0, 0.6);
   transform: translateX(-50%);
   animation: tip-in 0.22s ease;
+  overflow-y: auto;
 }
 @keyframes tip-in {
   from {

@@ -6,8 +6,8 @@
  * （亚历山大 / 罗马 / 东罗马 / 查理曼 / 美国 / 欧盟）大面积留白即是论点本身。
  * 美国视为欧洲文明的延伸（用户拍板），计入西方轨。
  *
- * 年份核对来源：中文维基百科（二里头文化约前1800–前1521；官交子天圣二年 1024 发行等），
- * 其余为通行史学纪年。
+ * 年份核对来源：中文维基百科。147 个事件已于 2026-10 全量比对维基条目并修正
+ * （详见 docs/data-audit.md），其余口径差异（约/前后、分期争议）在报告中逐条注明。
  */
 
 export type Side = 'asia' | 'europe'
@@ -48,7 +48,7 @@ export interface EraMark {
 
 export const asiaEvents: TimelineEvent[] = [
   { id: 'erlitou', side: 'asia', name: '二里头文化', startYear: -1800, endYear: -1521, desc: '洛阳盆地的宫殿群与青铜礼器，主流视为夏都斟鄩候选，末期或已入商。', note: '与克里特米诺斯文明大体同期——青铜宫室文明在欧亚两端几乎同时点亮。' },
-  { id: 'oracle-bone', side: 'asia', name: '甲骨文', startYear: -1300, desc: '商王占卜的刻辞，迄今最早的成熟汉字体系，中国信史的开端。' },
+  { id: 'oracle-bone', side: 'asia', name: '甲骨文', startYear: -1250, desc: '商王占卜的刻辞，迄今最早的成熟汉字体系，中国信史的开端。' },
   { id: 'zhou-fengjian', side: 'asia', name: '西周封建', startYear: -1046, desc: '武王克商、周公制礼，以分封与宗法搭建"天下"秩序。' },
   { id: 'gonghe', side: 'asia', name: '共和行政', startYear: -841, endYear: -828, desc: '国人暴动逐厉王，周召共和——中国历史自此有逐年可考的确切纪年。', note: '前 841 年是中外史学界公认的中国确切纪年起点，比罗马建城还早 88 年。' },
   { id: 'confucius', side: 'asia', name: '孔子', startYear: -551, endYear: -479, desc: '儒家的创立者，中国思想的元典时代由此展开。', note: '与佛陀、苏格拉底基本同时——人类文明的"轴心时代"。' },
@@ -79,7 +79,7 @@ export const asiaEvents: TimelineEvent[] = [
   { id: 'anlushi', side: 'asia', name: '安史之乱', startYear: 755, endYear: 763, desc: '盛唐由盛转衰，经济重心加速南移。' },
   { id: 'gunpowder-war', side: 'asia', name: '火药用于战争', startYear: 904, desc: '唐末"飞火"见载，火药从炼丹炉走向战场。' },
   { id: 'jiaozi', side: 'asia', name: '交子', startYear: 1024, desc: '北宋设益州交子务、官交子发行，世界最早的政府纸币。', note: '早于欧洲纸币六百余年；同期欧洲仍在用银马克结算。' },
-  { id: 'movable-type', side: 'asia', name: '毕昇活字印刷', startYear: 1044, desc: '世界最早的活字印刷术。', note: '比古登堡早约四百年——但此后它在欧洲引爆的变革远大于中国。' },
+  { id: 'movable-type', side: 'asia', name: '毕昇活字印刷', startYear: 1045, desc: '世界最早的活字印刷术。', note: '比古登堡早约四百年——但此后它在欧洲引爆的变革远大于中国。' },
   { id: 'wanganshi', side: 'asia', name: '王安石变法', startYear: 1069, endYear: 1085, desc: '青苗、募役、农田水利，一场超前于时代的国家理财实验。' },
   { id: 'jingkang', side: 'asia', name: '靖康之变', startYear: 1127, desc: '金破汴京掳二帝，北宋亡，宋室南渡。' },
   { id: 'zhuxi', side: 'asia', name: '朱熹·理学', startYear: 1130, endYear: 1200, desc: '《四书集注》重构儒学，此后六百年东亚的官方哲学。' },
@@ -88,7 +88,7 @@ export const asiaEvents: TimelineEvent[] = [
   { id: 'marco-polo', side: 'asia', name: '马可·波罗抵华', startYear: 1275, desc: '威尼斯人入仕元廷，《行纪》把中国写成黄金世界。', note: '这份夸张的东方想象，数百年后成了大航海的燃料。' },
   { id: 'zhenghe', side: 'asia', name: '郑和下西洋', startYear: 1405, endYear: 1433, desc: '宝船七下西洋，最远抵达东非。', note: '早于哥伦布近九十年，规模远超，但此后中国转身内敛。' },
   { id: 'ricci', side: 'asia', name: '利玛窦来华', startYear: 1583, desc: '东西方第一次系统性知识对话：欧氏几何、世界地图进入中国。' },
-  { id: 'kangqian', side: 'asia', name: '康乾盛世', startYear: 1661, endYear: 1796, desc: '人口从一亿冲向三亿，传统盛世的极限。', note: '也正是在这一百三十年里英国完成工业革命——盛世与"大分流"同框。' },
+  { id: 'kangqian', side: 'asia', name: '康乾盛世', startYear: 1684, endYear: 1796, desc: '人口从一亿冲向三亿，传统盛世的极限。', note: '也正是在这百余年间英国跨过工业革命的门槛——盛世与"大分流"同框。' },
   { id: 'macartney', side: 'asia', name: '马戛尔尼使华', startYear: 1793, desc: '英国使团觐见乾隆，通商请求被"天朝物产丰盈"驳回。', note: '47 年后，鸦片战争的炮舰替商船敲开了同一扇门。' },
   { id: 'humen', side: 'asia', name: '虎门销烟', startYear: 1839, desc: '林则徐海滩销烟两万余箱，鸦片战争的直接导火索。' },
   { id: 'opium-war', side: 'asia', name: '鸦片战争', startYear: 1840, endYear: 1842, desc: '工业文明撞开农业帝国的大门，中国进入百年屈辱与自救。' },
@@ -119,8 +119,8 @@ export const asiaEvents: TimelineEvent[] = [
 ]
 
 export const europeEvents: TimelineEvent[] = [
-  { id: 'minoan', side: 'europe', name: '米诺斯文明', startYear: -1950, endYear: -1450, desc: '迷宫般的克诺索斯宫与线性文字A，欧洲文明第一缕曙光。', note: '与二里头文化大体同期——青铜宫室文明在欧亚两端几乎同时点亮。' },
-  { id: 'mycenae', side: 'europe', name: '迈锡尼文明', startYear: -1600, endYear: -1100, desc: '荷马史诗中的黄金时代，与商朝大体同时的希腊青铜文明。', note: '线形文字B失传后，欧洲进入三百年"黑暗时代"。' },
+  { id: 'minoan', side: 'europe', name: '米诺斯文明', startYear: -2000, endYear: -1450, desc: '迷宫般的克诺索斯宫与线性文字A，欧洲文明第一缕曙光。', note: '与二里头文化大体同期——青铜宫室文明在欧亚两端几乎同时点亮。' },
+  { id: 'mycenae', side: 'europe', name: '迈锡尼文明', startYear: -1750, endYear: -1050, desc: '荷马史诗中的黄金时代，与商朝大体同时的希腊青铜文明。', note: '线形文字B失传后，欧洲进入三百年"黑暗时代"。' },
   { id: 'olympics', side: 'europe', name: '古代奥运会', startYear: -776, desc: '希腊城邦时代的纪年原点。' },
   { id: 'rome-founded', side: 'europe', name: '罗马建城', startYear: -753, desc: '传说中罗慕路斯建罗马，此后一千年地中海的主人登场。' },
   { id: 'persia', side: 'europe', name: '波斯帝国', startYear: -550, desc: '第一个横跨欧亚非的大帝国，"万王之王"登场。', note: '与春秋几乎同时：孔子出生前后，波斯正在统合三大洲。' },
@@ -142,10 +142,10 @@ export const europeEvents: TimelineEvent[] = [
   { id: 'rome-split', side: 'europe', name: '罗马东西分裂', startYear: 395, desc: '帝国一分为二，西欧从此走上碎片化道路。' },
   { id: 'rome-falls', side: 'europe', name: '西罗马灭亡', startYear: 476, desc: '欧洲最大的一次政治解体，此后一千四百年再无统一。', note: '时值中国南北朝：同样的大崩溃，中国走向再统一，欧洲走向永久分裂——分岔点即在此。' },
   { id: 'justinian', side: 'europe', name: '查士丁尼法典', startYear: 529, endYear: 534, desc: '《民法大全》汇编千年罗马法，今日欧陆法系的源头活水。' },
-  { id: 'arab-rise', side: 'europe', name: '阿拉伯帝国', startYear: 632, endYear: 661, desc: '四大哈里发开疆，一世纪内帝国横跨欧亚非。', note: '与唐并立为当时世界两极，两个巨型文明圈在中亚正面相遇。' },
+  { id: 'arab-rise', side: 'europe', name: '阿拉伯帝国', startYear: 632, endYear: 1258, desc: '从四大哈里发到阿拔斯王朝，一世纪内横跨欧亚非，六百年后亡于蒙古铁骑。', note: '与唐并立为当时世界两极，两个巨型文明圈在中亚正面相遇。' },
   { id: 'viking-age', side: 'europe', name: '维京时代', startYear: 793, endYear: 1066, desc: '林迪斯法恩劫掠开场，诺曼人从斯堪的纳维亚撒向整个欧洲。' },
   { id: 'charlemagne', side: 'europe', name: '查理曼加冕', startYear: 800, desc: '短暂统一西欧的尝试，帝国三分后碎片固化。', note: '时值盛唐：查理曼被称为"欧洲的秦始皇"，但他身后没有汉来接盘。' },
-  { id: 'house-of-wisdom', side: 'europe', name: '智慧宫', startYear: 813, endYear: 1000, desc: '巴格达把希腊、波斯、印度典籍译成阿拉伯文。', note: '欧洲坠入黑暗时代时，希腊火种在阿拉伯世界接力——数百年后回流，点燃文艺复兴。' },
+  { id: 'house-of-wisdom', side: 'europe', name: '智慧宫', startYear: 813, endYear: 1258, desc: '巴格达把希腊、波斯、印度典籍译成阿拉伯文，直至毁于蒙古战火。', note: '欧洲坠入黑暗时代时，希腊火种在阿拉伯世界接力——数百年后回流，点燃文艺复兴。' },
   { id: 'great-schism', side: 'europe', name: '东西教会大分裂', startYear: 1054, desc: '罗马与君士坦丁堡互相开除教籍，基督教世界一分为二。' },
   { id: 'first-crusade', side: 'europe', name: '第一次十字军', startYear: 1095, endYear: 1099, desc: '克莱蒙的一声"上帝所愿"，欧洲第一次集体向外远征。', note: '时值北宋：同一颗火花，欧洲点燃圣战，中国正点燃新儒学。' },
   { id: 'magna-carta', side: 'europe', name: '大宪章', startYear: 1215, desc: '王在法下，贵族限制君权的起点。', note: '时值南宋：欧洲在给王权上锁，中国在把皇权推向顶峰。' },

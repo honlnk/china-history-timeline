@@ -367,3 +367,15 @@ export const dynastyList: Dynasty[] = [
 export function bandYears(d: Dynasty): number {
   return (d.bandEnd ?? d.endYear) - (d.bandStart ?? d.startYear)
 }
+
+/**
+ * 某年份所处的朝代（欧亚对照视图的「时值中国·XX」标注）。
+ * 取列表中最后一个覆盖该年份的节点：东周年份会优先落到更具体的「春秋战国」。
+ */
+export function dynastyAt(year: number): Dynasty | undefined {
+  let found: Dynasty | undefined
+  for (const d of dynastyList) {
+    if (year >= d.startYear && year <= d.endYear) found = d
+  }
+  return found
+}

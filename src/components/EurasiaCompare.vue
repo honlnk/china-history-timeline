@@ -17,14 +17,14 @@ import { dynastyAt, dynastyColor, dynastyList } from '../data/dynasties'
 
 const YEAR_MIN = -2100
 const YEAR_MAX = 2060
-const PXY = 0.85 // px / 年
+const PXY = 1.0 // px / 年
 const PAD_L = 78
 const PAD_R = 52
 
 const RULER_H = 34 // 与样式内 .gridline 的 top 对应
 const RIBBON_H = 24
-const ROW_H = 30
-const GAP_H = 34
+const ROW_H = 22
+const GAP_H = 24
 
 const CONTENT_W = Math.round(PAD_L + (YEAR_MAX - YEAR_MIN) * PXY + PAD_R)
 
@@ -64,7 +64,7 @@ function placeEvents(side: 'asia' | 'europe'): PlacedEvent[] {
     const x2 = xOf(ev.endYear ?? ev.startYear)
     const barW = (ev.endYear ?? 0) - ev.startYear >= 8 ? Math.max(x2 - x1, 12) : 0
     const cx = Math.round((x1 + x2) / 2)
-    const w = 26 + ev.name.length * 13
+    const w = 26 + ev.name.length * 12
     let row = rowsEnd.findIndex((end) => cx - w / 2 > end + 8)
     if (row === -1) {
       row = rowsEnd.length
@@ -220,9 +220,9 @@ function timeText(ev: TimelineEvent): string {
 
 const legendItems = [
   { label: '中国大事', cls: 'dot-gold' },
-  { label: '欧洲大事', cls: 'dot-blue' },
+  { label: '欧美大事', cls: 'dot-blue' },
   { label: '跨代进程', cls: 'bar' },
-  { label: '欧洲整合期', cls: 'band' },
+  { label: '西方整合期', cls: 'band' },
   { label: '同世代对照', cls: 'era' },
 ]
 </script>
@@ -233,7 +233,7 @@ const legendItems = [
     <div class="mx-auto max-w-4xl px-4 text-center">
       <h2 class="text-xl font-black tracking-[0.2em] text-parchment md:text-2xl">欧亚对照 · 四千年并读</h2>
       <p class="mx-auto mt-3 max-w-2xl text-[13px] leading-6 text-mist md:text-sm">
-        上轨中国，下轨欧洲，刻度等距如实。欧洲除罗马外几乎没有长期统一政权——于是不比朝代，比大事：
+        上轨中国，下轨欧美（美国视为欧洲文明的延伸），刻度等距如实。西方除罗马外几乎没有长期统一政权——于是不比朝代，比大事：
         看事件落在中国哪个朝代的位置上，看"分久必合"与"合久必分"如何在两端各自上演。
       </p>
       <div class="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[11.5px] text-ivory/80 md:text-xs">
@@ -298,7 +298,7 @@ const legendItems = [
 
           <!-- 欧洲轨 -->
           <div class="absolute" :style="{ top: EUROPE_TOP + 'px', left: 0, width: CONTENT_W + 'px', height: EUROPE_H + 'px' }">
-            <span class="lane-chip" :style="{ marginTop: EUROPE_H / 2 - 14 + 'px' }">欧洲</span>
+            <span class="lane-chip" :style="{ marginTop: EUROPE_H / 2 - 14 + 'px' }">欧美 · 西方</span>
 
             <div v-for="b in euBands" :key="b.id" class="dyna-band" :style="{ left: b.x + 'px', width: b.w + 'px', '--nc': b.color }" :title="b.title">
               <span v-if="b.show" class="dyna-band-name">{{ b.label }}</span>

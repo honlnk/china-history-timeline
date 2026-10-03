@@ -30,6 +30,7 @@ onBeforeUnmount(() => mq.removeEventListener('change', onMqChange))
       v-if="!isMobile"
       class="relative z-10"
       :list="dynastyList"
+      :active-id="active?.id ?? null"
       @select="active = $event"
     />
     <div v-else class="relative z-10 mx-auto max-w-3xl">
@@ -37,7 +38,7 @@ onBeforeUnmount(() => mq.removeEventListener('change', onMqChange))
     </div>
 
     <footer class="relative z-10 space-y-2 px-6 pb-10 pt-8 text-center text-[11px] tracking-wider text-faint md:text-xs">
-      <p>十六段纪元 · 四十个世纪的分与合</p>
+      <p>十八段纪元 · 四十个世纪的分与合</p>
       <p>
         内容依据通识史料整理，仅供学习参考 ·
         <a

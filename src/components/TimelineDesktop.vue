@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 import { bandYears, dynastyColor, type Dynasty } from '../data/dynasties'
 import DynastySeal from './DynastySeal.vue'
 
-const props = defineProps<{ list: Dynasty[] }>()
+const props = defineProps<{ list: Dynasty[]; activeId?: string | null }>()
 const emit = defineEmits<{ select: [dynasty: Dynasty] }>()
 
 /** 印章中心距色带左缘的水平位置 */
@@ -75,6 +75,22 @@ onMounted(() => {
 onBeforeUnmount(() => {
   scrollEl.value?.removeEventListener('wheel', onWheel)
 })
+
+/* 面板打开时，把激活节点锚定到面板左侧可见区的中心（桌面侧栏宽 480px 让位） */
+const PANEL_W = 480
+watch(
+  () => props.activeId,
+  (id) => {
+    const el = scrollEl.value
+    if (!id || !el) return
+    const idx = props.list.findIndex((d) => d.id === id)
+    const era = el.querySelectorAll('.era')[idx] as HTMLElement | undefined
+    if (!era) return
+    const sealCenter = era.offsetLeft + SEAL_X
+    const visible = Math.max(el.clientWidth - PANEL_W, 320)
+    el.scrollTo({ left: sealCenter - visible / 2, behavior: 'smooth' })
+  },
+)
 </script>
 
 <template>

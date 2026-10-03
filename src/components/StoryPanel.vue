@@ -110,6 +110,29 @@ onBeforeUnmount(() => {
             <span class="dropcap" aria-hidden="true">{{ dynasty.summary[0] }}</span>{{ dynasty.summary.slice(1) }}
           </p>
 
+          <template v-if="dynasty.moments?.length">
+            <h3 class="sec-title mt-9">大 事 刻 度</h3>
+            <ul class="mt-4 moment-list">
+              <li v-for="m in dynasty.moments" :key="m.year + m.text" class="moment">
+                <span class="m-year">{{ m.year }}</span>
+                <span class="m-node" aria-hidden="true" />
+                <span class="m-text">{{ m.text }}</span>
+              </li>
+            </ul>
+          </template>
+
+          <template v-if="dynasty.figures?.length">
+            <h3 class="sec-title mt-9">其 人</h3>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span v-for="f in dynasty.figures" :key="f" class="figure-chip">{{ f }}</span>
+            </div>
+          </template>
+
+          <div v-if="dynasty.quote" class="mt-9 quote-block">
+            <p class="q-text">「{{ dynasty.quote.text }}」</p>
+            <p class="q-src">—— {{ dynasty.quote.source }}</p>
+          </div>
+
           <h3 class="sec-title mt-9">长河点评 · 分与合</h3>
           <blockquote class="mt-4 rounded-r-lg py-4 pl-5 pr-4">
             <p class="text-[15px] leading-8 text-gold-200/95">
@@ -298,6 +321,81 @@ onBeforeUnmount(() => {
 blockquote {
   border-left: 3px solid color-mix(in srgb, var(--nc) 75%, transparent);
   background: color-mix(in srgb, var(--nc) 7%, transparent);
+}
+
+/* 大事刻度：竖排时间线 */
+.moment-list {
+  border-left: 1px solid color-mix(in srgb, var(--nc) 30%, transparent);
+  margin-left: 52px;
+  padding-left: 0;
+  list-style: none;
+}
+.moment {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 7px 0;
+}
+.moment:last-child {
+  padding-bottom: 2px;
+}
+.m-year {
+  position: absolute;
+  left: -62px;
+  width: 52px;
+  text-align: right;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: #b7b19d;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.m-node {
+  position: absolute;
+  left: -3.5px;
+  top: 13px;
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--nc) 85%, #ece5d3);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--nc) 55%, transparent);
+}
+.m-text {
+  font-size: 13.5px;
+  line-height: 1.8;
+  color: #cfc9b6;
+}
+
+/* 其人：人物章 */
+.figure-chip {
+  border: 1px solid color-mix(in srgb, var(--nc) 40%, transparent);
+  background: color-mix(in srgb, var(--nc) 8%, transparent);
+  color: color-mix(in srgb, var(--nc) 45%, #ece5d3);
+  border-radius: 8px;
+  padding: 5px 14px;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+}
+
+/* 史籍一言 */
+.quote-block {
+  text-align: center;
+  padding: 18px 8px 14px;
+  border-top: 1px dashed rgba(163, 127, 66, 0.35);
+  border-bottom: 1px dashed rgba(163, 127, 66, 0.35);
+}
+.q-text {
+  font-size: 15px;
+  line-height: 2;
+  color: #e6cf97;
+  letter-spacing: 0.04em;
+}
+.q-src {
+  margin-top: 8px;
+  font-size: 11.5px;
+  letter-spacing: 0.2em;
+  color: #8d8776;
 }
 
 .nav-btn {
